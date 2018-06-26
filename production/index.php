@@ -705,7 +705,7 @@
         </div>
         <!-- /page content -->
         <?php
-          include("ooter.php");
+          include("footer.php");
         ?>
       </div>
     </div>
