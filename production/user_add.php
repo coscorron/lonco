@@ -3,6 +3,8 @@
   <head>
     <?php
       include("referencia.php");
+      include("connection_db.php");
+      include("WS_perfil.php");
     ?>
   </head>
   <body class="nav-md">
@@ -22,27 +24,27 @@
                 </div>
                 <div class="x_content">
                   <br />
-                  <form id="demo-form2" data-parsley-validate class="form-horizontal form-label-left">
+                  <form id="form1" name="form1" data-parsley-validate class="form-horizontal form-label-left" method="post">
 
                     <div class="form-group">
                       <label class="control-label col-md-3 col-sm-3 col-xs-12" for="first-name">Mail <span class="required">*</span>
                       </label>
                       <div class="col-md-6 col-sm-6 col-xs-12">
-                        <input type="mail" id="txtMail" name="txtMail" required="required" class="form-control col-md-7 col-xs-12">
+                        <input type="email" id="txtMail" name="txtMail" required="required" class="form-control col-md-7 col-xs-12">
                       </div>
                     </div>
                     <div class="form-group">
                       <label class="control-label col-md-3 col-sm-3 col-xs-12" for="first-name">Password
                       </label>
                       <div class="col-md-6 col-sm-6 col-xs-12">
-                        <input type="password" id="txtPass1" name="txtPass1"  class="form-control col-md-7 col-xs-12">
+                        <input type="password" id="txtPass1" name="txtPass1" required="required"  class="form-control col-md-7 col-xs-12">
                       </div>
                     </div>
                     <div class="form-group">
-                      <label class="control-label col-md-3 col-sm-3 col-xs-12" for="first-name">Confirmar Password <span class="required">*</span>
+                      <label class="control-label col-md-3 col-sm-3 col-xs-12"  for="first-name">Confirmar Password <span class="required">*</span>
                       </label>
                       <div class="col-md-6 col-sm-6 col-xs-12">
-                        <input type="mail" id="txtPass2" name="txtPass2"  class="form-control col-md-7 col-xs-12">
+                        <input type="password" id="txtPass2" name="txtPass2" required="required"  class="form-control col-md-7 col-xs-12">
                       </div>
                     </div>
 
@@ -70,22 +72,16 @@
                     <div class="form-group">
                       <label class="control-label col-md-3 col-sm-3 col-xs-12">Perfil</label>
                       <div class="col-md-6 col-sm-6 col-xs-12">
-                        <select class="form-control">
-                          <option>Choose option</option>
-                          <option>Option one</option>
-                          <option>Option two</option>
-                          <option>Option three</option>
-                          <option>Option four</option>
-                        </select>
+                        <select name="slcProfile" id="slcProfile"  required><?php getPerfil($conn, 0); ?></select>
                       </div>
                     </div>
                       <div class="form-group">
                         <label class="control-label col-md-3 col-sm-3 col-xs-12">Tipo</label>
                         <div class="col-md-6 col-sm-6 col-xs-12">
-                          <select class="form-control">
-                            <option>Choose option</option>
-                            <option>P - Propio</option>
-                            <option>E - Externo / Subcontratado</option>
+                          <select id="slcTipo" name="slcTipo" required="required">
+                            <option value="">Seleccionar</option>
+                            <option value="P">P - Propio</option>
+                            <option value="E">E - Externo / Subcontratado</option>
                           </select>
                         </div>
                     </div>
@@ -128,4 +124,17 @@
       include("referenciaFooter.php");
     ?>
   </body>
+  <script>
+  var form = document.getElementById('form1');
+  var pass1 = document.getElementById('txtPass1');
+  var pass2 = document.getElementById('txtPass2');
+
+  form.addEventListener("submit", function (event) {
+    if (pass1.value != pass2.value){
+      alert('WRONG password confirm!');
+      event.preventDefault();
+      pass2.focus();
+    }
+  }, false);
+  </script>
 </html>
