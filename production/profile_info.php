@@ -1,7 +1,7 @@
 <div class="col-md-3 left_col">
   <div class="left_col scroll-view">
     <div class="navbar nav_title" style="border: 0;">
-      <a href="index.php" class="site_title"><i class="fa fa-paw"></i> <span>Lonco</span></a>
+      <a href="index.php" class="site_title"><img src="images/logo.png"><span>Lonco</span></a>
     </div>
 
     <div class="clearfix"></div>
@@ -12,8 +12,8 @@
         <img src="images/img.jpg" alt="..." class="img-circle profile_img">
       </div>
       <div class="profile_info">
-        <span>Welcome,</span>
-        <h2>John Doe</h2>
+        <span>Bienvenido,</span>
+        <h2><?php echo $_SESSION["nombre"]; ?></h2>
       </div>
     </div>
     <!-- /menu profile quick info -->

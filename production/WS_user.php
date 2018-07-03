@@ -112,4 +112,26 @@ function RemoveUser($conn, $txtUser){
   $conn->query($sql);
 }
 
+//valida login
+function login($conn, $txtMail, $txtPass){
+  $sql = "SELECT nombre, paterno, idPerfil, password FROM tbl_usuario WHERE mail = '$txtMail' AND habilitado = 1 AND eliminado = 0";
+  $rs = $conn->query($sql);
+  $resultado[0] = 0;
+  $resultado[1] = "Usuario no existe o bloqueado";
+  while ($row = $rs->fetch_assoc()) {
+    $password = $row["password"];
+    $nombre = $row["nombre"] . " " . $row["paterno"];
+    $idPerfil = $row["idPerfil"];
+    if (password_verify($txtPass, $password)) {
+        $resultado[0] = 1;
+        $resultado[1] = "OK";
+        $resultado[2] = $nombre;
+        $resultado[3] = $idPerfil;
+    } else {
+        $resultado[0] = 0;
+        $resultado[1] = "Usuario o contraseña no coinciden";
+    }
+  }
+  return $resultado;
+}
 ?>

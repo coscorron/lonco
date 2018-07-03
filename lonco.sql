@@ -1,39 +1,40 @@
 -- phpMyAdmin SQL Dump
--- version 4.1.6
--- http://www.phpmyadmin.net
+-- version 4.8.1
+-- https://www.phpmyadmin.net/
 --
--- Host: localhost
--- Generation Time: Jul 02, 2018 at 02:43 PM
--- Server version: 5.6.16
--- PHP Version: 5.5.9
+-- Servidor: 127.0.0.1
+-- Tiempo de generación: 04-07-2018 a las 00:19:47
+-- Versión del servidor: 10.1.33-MariaDB
+-- Versión de PHP: 7.2.6
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
+SET AUTOCOMMIT = 0;
+START TRANSACTION;
 SET time_zone = "+00:00";
 
 
 /*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;
 /*!40101 SET @OLD_CHARACTER_SET_RESULTS=@@CHARACTER_SET_RESULTS */;
 /*!40101 SET @OLD_COLLATION_CONNECTION=@@COLLATION_CONNECTION */;
-/*!40101 SET NAMES utf8 */;
+/*!40101 SET NAMES utf8mb4 */;
 
 --
--- Database: `lonco`
+-- Base de datos: `lonco`
 --
 
 -- --------------------------------------------------------
 
 --
--- Table structure for table `tbl_checklist`
+-- Estructura de tabla para la tabla `tbl_checklist`
 --
 
-CREATE TABLE IF NOT EXISTS `tbl_checklist` (
-  `idCheckList` int(11) NOT NULL AUTO_INCREMENT,
-  `nombre` varchar(50) NOT NULL,
-  PRIMARY KEY (`idCheckList`)
-) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=2 ;
+CREATE TABLE `tbl_checklist` (
+  `idCheckList` int(11) NOT NULL,
+  `nombre` varchar(50) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 --
--- Dumping data for table `tbl_checklist`
+-- Volcado de datos para la tabla `tbl_checklist`
 --
 
 INSERT INTO `tbl_checklist` (`idCheckList`, `nombre`) VALUES
@@ -42,31 +43,29 @@ INSERT INTO `tbl_checklist` (`idCheckList`, `nombre`) VALUES
 -- --------------------------------------------------------
 
 --
--- Table structure for table `tbl_cliente`
+-- Estructura de tabla para la tabla `tbl_cliente`
 --
 
-CREATE TABLE IF NOT EXISTS `tbl_cliente` (
-  `idCliente` int(11) NOT NULL AUTO_INCREMENT,
-  `nombre` varchar(50) NOT NULL,
-  PRIMARY KEY (`idCliente`)
-) ENGINE=InnoDB DEFAULT CHARSET=latin1 AUTO_INCREMENT=1 ;
+CREATE TABLE `tbl_cliente` (
+  `idCliente` int(11) NOT NULL,
+  `nombre` varchar(50) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 -- --------------------------------------------------------
 
 --
--- Table structure for table `tbl_cl_section`
+-- Estructura de tabla para la tabla `tbl_cl_section`
 --
 
-CREATE TABLE IF NOT EXISTS `tbl_cl_section` (
-  `idSeccion` int(11) NOT NULL AUTO_INCREMENT,
+CREATE TABLE `tbl_cl_section` (
+  `idSeccion` int(11) NOT NULL,
   `idCheckList` int(11) NOT NULL,
   `nombre` varchar(50) NOT NULL,
-  `Orden` int(11) NOT NULL,
-  PRIMARY KEY (`idSeccion`)
-) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=10 ;
+  `Orden` int(11) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 --
--- Dumping data for table `tbl_cl_section`
+-- Volcado de datos para la tabla `tbl_cl_section`
 --
 
 INSERT INTO `tbl_cl_section` (`idSeccion`, `idCheckList`, `nombre`, `Orden`) VALUES
@@ -83,19 +82,18 @@ INSERT INTO `tbl_cl_section` (`idSeccion`, `idCheckList`, `nombre`, `Orden`) VAL
 -- --------------------------------------------------------
 
 --
--- Table structure for table `tbl_cl_s_pregunta`
+-- Estructura de tabla para la tabla `tbl_cl_s_pregunta`
 --
 
-CREATE TABLE IF NOT EXISTS `tbl_cl_s_pregunta` (
-  `idPregunta` int(11) NOT NULL AUTO_INCREMENT,
+CREATE TABLE `tbl_cl_s_pregunta` (
+  `idPregunta` int(11) NOT NULL,
   `idSeccion` int(11) NOT NULL,
   `nombre` text NOT NULL,
-  `orden` int(11) NOT NULL,
-  PRIMARY KEY (`idPregunta`)
-) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=46 ;
+  `orden` int(11) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 --
--- Dumping data for table `tbl_cl_s_pregunta`
+-- Volcado de datos para la tabla `tbl_cl_s_pregunta`
 --
 
 INSERT INTO `tbl_cl_s_pregunta` (`idPregunta`, `idSeccion`, `nombre`, `orden`) VALUES
@@ -148,25 +146,24 @@ INSERT INTO `tbl_cl_s_pregunta` (`idPregunta`, `idSeccion`, `nombre`, `orden`) V
 -- --------------------------------------------------------
 
 --
--- Table structure for table `tbl_garantia`
+-- Estructura de tabla para la tabla `tbl_garantia`
 --
 
-CREATE TABLE IF NOT EXISTS `tbl_garantia` (
-  `idGarantia` int(11) NOT NULL AUTO_INCREMENT,
+CREATE TABLE `tbl_garantia` (
+  `idGarantia` int(11) NOT NULL,
   `idProyecto` int(11) NOT NULL,
   `fechaReserva` date NOT NULL,
-  `monto` int(11) NOT NULL,
-  PRIMARY KEY (`idGarantia`)
-) ENGINE=InnoDB DEFAULT CHARSET=latin1 AUTO_INCREMENT=1 ;
+  `monto` int(11) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 -- --------------------------------------------------------
 
 --
--- Table structure for table `tbl_gasto`
+-- Estructura de tabla para la tabla `tbl_gasto`
 --
 
-CREATE TABLE IF NOT EXISTS `tbl_gasto` (
-  `idGasto` int(11) NOT NULL AUTO_INCREMENT,
+CREATE TABLE `tbl_gasto` (
+  `idGasto` int(11) NOT NULL,
   `idProyecto` int(11) NOT NULL,
   `estado` int(11) NOT NULL,
   `descripcion` text NOT NULL,
@@ -174,40 +171,51 @@ CREATE TABLE IF NOT EXISTS `tbl_gasto` (
   `coste` int(11) NOT NULL,
   `unidad` int(11) NOT NULL,
   `fecha` datetime NOT NULL,
-  `costeTotal` int(11) NOT NULL,
-  PRIMARY KEY (`idGasto`)
-) ENGINE=InnoDB DEFAULT CHARSET=latin1 AUTO_INCREMENT=1 ;
+  `costeTotal` int(11) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 -- --------------------------------------------------------
 
 --
--- Table structure for table `tbl_parametro`
+-- Estructura de tabla para la tabla `tbl_log`
 --
 
-CREATE TABLE IF NOT EXISTS `tbl_parametro` (
-  `idParametro` int(11) NOT NULL AUTO_INCREMENT,
+CREATE TABLE `tbl_log` (
+  `idLog` int(11) NOT NULL,
+  `fecha` datetime NOT NULL,
+  `accion` varchar(12) NOT NULL,
+  `usuario` varchar(50) NOT NULL,
+  `descripcion` text NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+-- --------------------------------------------------------
+
+--
+-- Estructura de tabla para la tabla `tbl_parametro`
+--
+
+CREATE TABLE `tbl_parametro` (
+  `idParametro` int(11) NOT NULL,
   `tipo` int(11) NOT NULL,
   `nombre` varchar(50) NOT NULL,
-  `habilitado` int(11) NOT NULL,
-  PRIMARY KEY (`idParametro`)
-) ENGINE=InnoDB DEFAULT CHARSET=latin1 AUTO_INCREMENT=1 ;
+  `habilitado` int(11) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 -- --------------------------------------------------------
 
 --
--- Table structure for table `tbl_perfil`
+-- Estructura de tabla para la tabla `tbl_perfil`
 --
 
-CREATE TABLE IF NOT EXISTS `tbl_perfil` (
-  `idPerfil` int(11) NOT NULL AUTO_INCREMENT,
+CREATE TABLE `tbl_perfil` (
+  `idPerfil` int(11) NOT NULL,
   `nombre` varchar(20) NOT NULL,
   `habilitado` int(11) NOT NULL DEFAULT '1',
-  `eliminado` int(11) NOT NULL DEFAULT '0',
-  PRIMARY KEY (`idPerfil`)
-) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=3 ;
+  `eliminado` int(11) NOT NULL DEFAULT '0'
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 --
--- Dumping data for table `tbl_perfil`
+-- Volcado de datos para la tabla `tbl_perfil`
 --
 
 INSERT INTO `tbl_perfil` (`idPerfil`, `nombre`, `habilitado`, `eliminado`) VALUES
@@ -217,45 +225,43 @@ INSERT INTO `tbl_perfil` (`idPerfil`, `nombre`, `habilitado`, `eliminado`) VALUE
 -- --------------------------------------------------------
 
 --
--- Table structure for table `tbl_planning`
+-- Estructura de tabla para la tabla `tbl_planning`
 --
 
-CREATE TABLE IF NOT EXISTS `tbl_planning` (
-  `idPlanning` int(11) NOT NULL AUTO_INCREMENT,
+CREATE TABLE `tbl_planning` (
+  `idPlanning` int(11) NOT NULL,
   `idProyecto` int(11) NOT NULL,
   `mesagno` varchar(6) NOT NULL,
   `mail` varchar(50) NOT NULL,
   `tipo` int(11) NOT NULL,
   `previstas` int(11) NOT NULL,
-  `realizadas` int(11) NOT NULL,
-  PRIMARY KEY (`idPlanning`)
-) ENGINE=InnoDB DEFAULT CHARSET=latin1 AUTO_INCREMENT=1 ;
+  `realizadas` int(11) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 -- --------------------------------------------------------
 
 --
--- Table structure for table `tbl_ppo`
+-- Estructura de tabla para la tabla `tbl_ppo`
 --
 
-CREATE TABLE IF NOT EXISTS `tbl_ppo` (
-  `idPPO` int(11) NOT NULL AUTO_INCREMENT,
+CREATE TABLE `tbl_ppo` (
+  `idPPO` int(11) NOT NULL,
   `nombre` varchar(50) NOT NULL,
   `descripcion` text NOT NULL,
   `param1` int(11) NOT NULL,
   `param2` int(11) NOT NULL,
   `param3` int(11) NOT NULL,
-  `orden` int(11) NOT NULL,
-  PRIMARY KEY (`idPPO`)
-) ENGINE=InnoDB DEFAULT CHARSET=latin1 AUTO_INCREMENT=1 ;
+  `orden` int(11) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 -- --------------------------------------------------------
 
 --
--- Table structure for table `tbl_proyecto`
+-- Estructura de tabla para la tabla `tbl_proyecto`
 --
 
-CREATE TABLE IF NOT EXISTS `tbl_proyecto` (
-  `idProyecto` int(11) NOT NULL AUTO_INCREMENT,
+CREATE TABLE `tbl_proyecto` (
+  `idProyecto` int(11) NOT NULL,
   `idCliente` int(11) NOT NULL,
   `nombre` varchar(50) NOT NULL,
   `cc` varchar(20) NOT NULL,
@@ -264,12 +270,11 @@ CREATE TABLE IF NOT EXISTS `tbl_proyecto` (
   `plazo` int(11) NOT NULL,
   `fechaInicio` date NOT NULL,
   `fechaTermino` date NOT NULL,
-  `estadoCHK` int(11) NOT NULL,
-  PRIMARY KEY (`idProyecto`)
-) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=2 ;
+  `estadoCHK` int(11) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 --
--- Dumping data for table `tbl_proyecto`
+-- Volcado de datos para la tabla `tbl_proyecto`
 --
 
 INSERT INTO `tbl_proyecto` (`idProyecto`, `idCliente`, `nombre`, `cc`, `gerente`, `jefe`, `plazo`, `fechaInicio`, `fechaTermino`, `estadoCHK`) VALUES
@@ -278,10 +283,10 @@ INSERT INTO `tbl_proyecto` (`idProyecto`, `idCliente`, `nombre`, `cc`, `gerente`
 -- --------------------------------------------------------
 
 --
--- Table structure for table `tbl_proyecto_ppo`
+-- Estructura de tabla para la tabla `tbl_proyecto_ppo`
 --
 
-CREATE TABLE IF NOT EXISTS `tbl_proyecto_ppo` (
+CREATE TABLE `tbl_proyecto_ppo` (
   `idProyecto` int(11) NOT NULL,
   `idPPO` int(11) NOT NULL,
   `monto` int(11) NOT NULL,
@@ -291,10 +296,10 @@ CREATE TABLE IF NOT EXISTS `tbl_proyecto_ppo` (
 -- --------------------------------------------------------
 
 --
--- Table structure for table `tbl_proy_respuesta`
+-- Estructura de tabla para la tabla `tbl_proy_respuesta`
 --
 
-CREATE TABLE IF NOT EXISTS `tbl_proy_respuesta` (
+CREATE TABLE `tbl_proy_respuesta` (
   `idProyecto` int(11) NOT NULL,
   `idPregunta` int(11) NOT NULL,
   `respuesta` text NOT NULL,
@@ -303,7 +308,7 @@ CREATE TABLE IF NOT EXISTS `tbl_proy_respuesta` (
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 --
--- Dumping data for table `tbl_proy_respuesta`
+-- Volcado de datos para la tabla `tbl_proy_respuesta`
 --
 
 INSERT INTO `tbl_proy_respuesta` (`idProyecto`, `idPregunta`, `respuesta`, `comentario`, `fecha`) VALUES
@@ -356,48 +361,235 @@ INSERT INTO `tbl_proy_respuesta` (`idProyecto`, `idPregunta`, `respuesta`, `come
 -- --------------------------------------------------------
 
 --
--- Table structure for table `tbl_subRiesgo`
+-- Estructura de tabla para la tabla `tbl_subriesgo`
 --
 
-CREATE TABLE IF NOT EXISTS `tbl_subRiesgo` (
-  `idSubRiesgo` int(11) NOT NULL AUTO_INCREMENT,
+CREATE TABLE `tbl_subriesgo` (
+  `idSubRiesgo` int(11) NOT NULL,
   `idTipoRiesgo` int(11) NOT NULL,
-  `descripcion` text NOT NULL,
-  PRIMARY KEY (`idSubRiesgo`)
-) ENGINE=InnoDB DEFAULT CHARSET=latin1 AUTO_INCREMENT=1 ;
+  `descripcion` text NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 -- --------------------------------------------------------
 
 --
--- Table structure for table `tbl_tipoRiesgo`
+-- Estructura de tabla para la tabla `tbl_tiporiesgo`
 --
 
-CREATE TABLE IF NOT EXISTS `tbl_tipoRiesgo` (
-  `idTipoRiesgo` int(11) NOT NULL AUTO_INCREMENT,
+CREATE TABLE `tbl_tiporiesgo` (
+  `idTipoRiesgo` int(11) NOT NULL,
   `nombre` varchar(50) NOT NULL,
-  `habilitado` int(11) NOT NULL,
-  PRIMARY KEY (`idTipoRiesgo`)
-) ENGINE=InnoDB DEFAULT CHARSET=latin1 AUTO_INCREMENT=1 ;
+  `habilitado` int(11) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 -- --------------------------------------------------------
 
 --
--- Table structure for table `tbl_usuario`
+-- Estructura de tabla para la tabla `tbl_usuario`
 --
 
-CREATE TABLE IF NOT EXISTS `tbl_usuario` (
+CREATE TABLE `tbl_usuario` (
   `mail` varchar(50) NOT NULL,
   `nombre` varchar(50) NOT NULL,
   `paterno` varchar(50) NOT NULL,
   `materno` varchar(50) NOT NULL,
   `idPerfil` int(11) NOT NULL,
   `tipo` varchar(1) NOT NULL,
-  `password` varchar(50) NOT NULL,
+  `password` varchar(80) NOT NULL,
   `habilitado` int(11) NOT NULL,
   `eliminado` int(11) NOT NULL,
-  `valorHH` int(11) NOT NULL,
-  PRIMARY KEY (`mail`)
+  `valorHH` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+--
+-- Volcado de datos para la tabla `tbl_usuario`
+--
+
+INSERT INTO `tbl_usuario` (`mail`, `nombre`, `paterno`, `materno`, `idPerfil`, `tipo`, `password`, `habilitado`, `eliminado`, `valorHH`) VALUES
+('rodrigo.amigo@connectis-gs.cl', 'Rodrigo', 'Amigo', 'MuÃ±oz', 1, 'P', '$2y$10$wTnYsQFzZfOyK6uPW/gp4eOLcYtfcly0uVg1WaYY7U3uw7CoiQLIO', 1, 0, 1000);
+
+--
+-- Índices para tablas volcadas
+--
+
+--
+-- Indices de la tabla `tbl_checklist`
+--
+ALTER TABLE `tbl_checklist`
+  ADD PRIMARY KEY (`idCheckList`);
+
+--
+-- Indices de la tabla `tbl_cliente`
+--
+ALTER TABLE `tbl_cliente`
+  ADD PRIMARY KEY (`idCliente`);
+
+--
+-- Indices de la tabla `tbl_cl_section`
+--
+ALTER TABLE `tbl_cl_section`
+  ADD PRIMARY KEY (`idSeccion`);
+
+--
+-- Indices de la tabla `tbl_cl_s_pregunta`
+--
+ALTER TABLE `tbl_cl_s_pregunta`
+  ADD PRIMARY KEY (`idPregunta`);
+
+--
+-- Indices de la tabla `tbl_garantia`
+--
+ALTER TABLE `tbl_garantia`
+  ADD PRIMARY KEY (`idGarantia`);
+
+--
+-- Indices de la tabla `tbl_gasto`
+--
+ALTER TABLE `tbl_gasto`
+  ADD PRIMARY KEY (`idGasto`);
+
+--
+-- Indices de la tabla `tbl_log`
+--
+ALTER TABLE `tbl_log`
+  ADD PRIMARY KEY (`idLog`);
+
+--
+-- Indices de la tabla `tbl_parametro`
+--
+ALTER TABLE `tbl_parametro`
+  ADD PRIMARY KEY (`idParametro`);
+
+--
+-- Indices de la tabla `tbl_perfil`
+--
+ALTER TABLE `tbl_perfil`
+  ADD PRIMARY KEY (`idPerfil`);
+
+--
+-- Indices de la tabla `tbl_planning`
+--
+ALTER TABLE `tbl_planning`
+  ADD PRIMARY KEY (`idPlanning`);
+
+--
+-- Indices de la tabla `tbl_ppo`
+--
+ALTER TABLE `tbl_ppo`
+  ADD PRIMARY KEY (`idPPO`);
+
+--
+-- Indices de la tabla `tbl_proyecto`
+--
+ALTER TABLE `tbl_proyecto`
+  ADD PRIMARY KEY (`idProyecto`);
+
+--
+-- Indices de la tabla `tbl_subriesgo`
+--
+ALTER TABLE `tbl_subriesgo`
+  ADD PRIMARY KEY (`idSubRiesgo`);
+
+--
+-- Indices de la tabla `tbl_tiporiesgo`
+--
+ALTER TABLE `tbl_tiporiesgo`
+  ADD PRIMARY KEY (`idTipoRiesgo`);
+
+--
+-- Indices de la tabla `tbl_usuario`
+--
+ALTER TABLE `tbl_usuario`
+  ADD PRIMARY KEY (`mail`);
+
+--
+-- AUTO_INCREMENT de las tablas volcadas
+--
+
+--
+-- AUTO_INCREMENT de la tabla `tbl_checklist`
+--
+ALTER TABLE `tbl_checklist`
+  MODIFY `idCheckList` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+
+--
+-- AUTO_INCREMENT de la tabla `tbl_cliente`
+--
+ALTER TABLE `tbl_cliente`
+  MODIFY `idCliente` int(11) NOT NULL AUTO_INCREMENT;
+
+--
+-- AUTO_INCREMENT de la tabla `tbl_cl_section`
+--
+ALTER TABLE `tbl_cl_section`
+  MODIFY `idSeccion` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=10;
+
+--
+-- AUTO_INCREMENT de la tabla `tbl_cl_s_pregunta`
+--
+ALTER TABLE `tbl_cl_s_pregunta`
+  MODIFY `idPregunta` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=46;
+
+--
+-- AUTO_INCREMENT de la tabla `tbl_garantia`
+--
+ALTER TABLE `tbl_garantia`
+  MODIFY `idGarantia` int(11) NOT NULL AUTO_INCREMENT;
+
+--
+-- AUTO_INCREMENT de la tabla `tbl_gasto`
+--
+ALTER TABLE `tbl_gasto`
+  MODIFY `idGasto` int(11) NOT NULL AUTO_INCREMENT;
+
+--
+-- AUTO_INCREMENT de la tabla `tbl_log`
+--
+ALTER TABLE `tbl_log`
+  MODIFY `idLog` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=9;
+
+--
+-- AUTO_INCREMENT de la tabla `tbl_parametro`
+--
+ALTER TABLE `tbl_parametro`
+  MODIFY `idParametro` int(11) NOT NULL AUTO_INCREMENT;
+
+--
+-- AUTO_INCREMENT de la tabla `tbl_perfil`
+--
+ALTER TABLE `tbl_perfil`
+  MODIFY `idPerfil` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+
+--
+-- AUTO_INCREMENT de la tabla `tbl_planning`
+--
+ALTER TABLE `tbl_planning`
+  MODIFY `idPlanning` int(11) NOT NULL AUTO_INCREMENT;
+
+--
+-- AUTO_INCREMENT de la tabla `tbl_ppo`
+--
+ALTER TABLE `tbl_ppo`
+  MODIFY `idPPO` int(11) NOT NULL AUTO_INCREMENT;
+
+--
+-- AUTO_INCREMENT de la tabla `tbl_proyecto`
+--
+ALTER TABLE `tbl_proyecto`
+  MODIFY `idProyecto` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+
+--
+-- AUTO_INCREMENT de la tabla `tbl_subriesgo`
+--
+ALTER TABLE `tbl_subriesgo`
+  MODIFY `idSubRiesgo` int(11) NOT NULL AUTO_INCREMENT;
+
+--
+-- AUTO_INCREMENT de la tabla `tbl_tiporiesgo`
+--
+ALTER TABLE `tbl_tiporiesgo`
+  MODIFY `idTipoRiesgo` int(11) NOT NULL AUTO_INCREMENT;
+COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
 /*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;
