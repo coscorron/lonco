@@ -3,11 +3,23 @@
   <head>
     <?php
       include("referencia.php");
+      include("connection_db.php");
+      include("WS_user.php");
+      $txtError = isset($_POST['txtError']) ? $_POST['txtError'] : '';
     ?>
     <script>
-    function Editar(){
-      location.href = 'user_edit.php';
-    }
+      function editar(user){
+        form2.txtMail.value = user;
+        form2.action = "user_edit.php";
+        form2.submit();
+      }
+      function Remove(user){
+        form2.txtMail.value = user;
+      }
+      function Delete(){
+        form2.action="user_remove.php";
+        form2.submit();
+      }
     </script>
   </head>
   <body class="nav-md">
@@ -22,11 +34,13 @@
             <div class="col-md-12 col-sm-12 col-xs-12">
               <div class="x_panel">
                 <div class="x_title">
-                  <h2>Listado de Usuarios</h2>
+                  <h2>Listado de Usuarios  <?php  echo $txtError; ?></h2>
                   <div class="clearfix"></div>
                 </div>
                 <div class="x_content">
-                  <form id="form2" name="form2" data-parsley-validate class="form-horizontal form-label-left">
+                  <form id="form2" name="form2" data-parsley-validate class="form-horizontal form-label-left" method="post" action="">
+                      <input type="hidden" id="txtMail" name="txtMail" value="">
+                    </form>
 
                         <div class="x_content">
 
@@ -34,64 +48,18 @@
                             <thead>
                               <tr>
                                 <th>Mail</th>
-                                <th>Nombres</th>
-                                <th>Apellido Paterno</th>
-                                <th>Apellido Materno</th>
+                                <th>Usuario</th>
+                                <th>Perfil</th>
                                 <th>Tipo</th>
                                 <th>Habilitado</th>
                                 <th>Acciones</th>
                               </tr>
                             </thead>
-
-
                             <tbody>
-                              <tr>
-                                <td>Tiger Nixon</td>
-                                <td>System Architect</td>
-                                <td>Edinburgh</td>
-                                <td>61</td>
-                                <td>2011/04/25</td>
-                                <td>$320,800</td>
-                                <td>
-                                  <div class="btn-group  btn-group-sm">
-                                    <button class="btn btn-info" type="button" onclick="Editar();">Editar</button>
-                                    <button class="btn btn-danger" type="button" data-toggle="modal" data-target=".bs-example-modal-sm">Eliminar</button>
-                                  </div>
-                                </td>
-                              </tr>
-                              <tr>
-                                <td>Garrett Winters</td>
-                                <td>Accountant</td>
-                                <td>Tokyo</td>
-                                <td>63</td>
-                                <td>2011/07/25</td>
-                                <td>$170,750</td>
-                                <td>
-                                  <div class="btn-group  btn-group-sm">
-                                    <button class="btn btn-info" type="button" onclick="Editar();">Editar</button>
-                                    <button class="btn btn-danger" type="button" data-toggle="modal" data-target=".bs-example-modal-sm">Eliminar</button>
-                                  </div>
-                                </td>
-                              </tr>
-                              <tr>
-                                <td>Ashton Cox</td>
-                                <td>Junior Technical Author</td>
-                                <td>San Francisco</td>
-                                <td>66</td>
-                                <td>2009/01/12</td>
-                                <td>$86,000</td>
-                                <td>
-                                  <div class="btn-group  btn-group-sm">
-                                    <button class="btn btn-info" type="button" onclick="Editar();">Editar</button>
-                                    <button class="btn btn-danger" type="button" data-toggle="modal" data-target=".bs-example-modal-sm">Eliminar</button>
-                                  </div>
-                                </td>
-                              </tr>
+                              <?php getUserList($conn); ?>
                             </tbody>
                           </table>
                         </div>
-
-                  </form>
                 </div>
                 <div class="clearfix"></div>
                 <button type="button" class="btn btn-success" onclick="location.href='user_add.php'"><i class="fa fa-plus"></i> Nuevo</button>
@@ -106,11 +74,11 @@
                       <h4 class="modal-title" id="myModalLabel2">Confirmación de eliminación</h4>
                     </div>
                     <div class="modal-body">
-                      <p>¿está seguro de eliminar a usuario XXXXXXX</p>
+                      <p>¿está seguro de eliminar a usuario?</p>
                     </div>
                     <div class="modal-footer">
                       <button type="button" class="btn btn-default" data-dismiss="modal">Cancelar</button>
-                      <button type="button" class="btn btn-danger">Eliminar</button>
+                      <button type="button" class="btn btn-danger" onclick="Delete();">Eliminar</button>
                     </div>
 
                   </div>

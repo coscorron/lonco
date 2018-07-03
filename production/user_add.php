@@ -24,7 +24,7 @@
                 </div>
                 <div class="x_content">
                   <br />
-                  <form id="form1" name="form1" data-parsley-validate class="form-horizontal form-label-left" method="post">
+                  <form id="form1" name="form1" data-parsley-validate class="form-horizontal form-label-left" method="post" action="user_insert.php">
 
                     <div class="form-group">
                       <label class="control-label col-md-3 col-sm-3 col-xs-12" for="first-name">Mail <span class="required">*</span>
@@ -89,7 +89,7 @@
                       <label class="control-label col-md-3 col-sm-3 col-xs-12">Habilitado</label>
                       <div class="col-md-6 col-sm-6 col-xs-12">
                         <label>
-                           <input type="checkbox" class="js-switch" checked />
+                           <input type="checkbox" id="chkEnabled" name="chkEnabled" class="js-switch" checked />
                          </label>
                       </div>
                     </div>
