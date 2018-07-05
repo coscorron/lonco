@@ -1,8 +1,16 @@
+<?php   include("sessions.php");
+$idApp = 1;
+?>
 <!DOCTYPE html>
 <html lang="en">
   <head>
     <?php
       include("referencia.php");
+      include("connection_db.php");
+      include("WS_perfil.php");
+      include("WS_user.php");
+      $txtMail = isset($_POST['txtMail']) ? $_POST['txtMail'] : '';
+      $resultado = getUser($conn,$txtMail);
     ?>
   </head>
   <body class="nav-md">
@@ -28,7 +36,8 @@
                       <label class="control-label col-md-3 col-sm-3 col-xs-12" for="first-name">Mail <span class="required">*</span>
                       </label>
                       <div class="col-md-6 col-sm-6 col-xs-12">
-                        <input type="mail" id="txtMail" name="txtMail" required="required" class="form-control col-md-7 col-xs-12">
+                        <input type="mail" id="txtMail2" name="txtMail2"  class="form-control col-md-7 col-xs-12" value="<?php echo $txtMail;?>" disabled>
+                        <input type="hidden" id="txtMail" name="txtMail" value="<?php echo $txtMail;?>">
                       </div>
                     </div>
                     <div class="form-group">
@@ -39,44 +48,37 @@
                       </div>
                     </div>
                     <div class="form-group">
-                      <label class="control-label col-md-3 col-sm-3 col-xs-12" for="first-name">Confirmar Password <span class="required">*</span>
+                      <label class="control-label col-md-3 col-sm-3 col-xs-12" for="first-name">Confirmar Password
                       </label>
                       <div class="col-md-6 col-sm-6 col-xs-12">
                         <input type="mail" id="txtPass2" name="txtPass2"  class="form-control col-md-7 col-xs-12">
                       </div>
                     </div>
-
                     <div class="form-group">
                       <label class="control-label col-md-3 col-sm-3 col-xs-12" for="last-name">Nombre <span class="required">*</span>
                       </label>
                       <div class="col-md-6 col-sm-6 col-xs-12">
-                        <input type="text" id="txtNombre" name="txtNombre" required="required" class="form-control col-md-7 col-xs-12">
+                        <input type="text" id="txtNombre" name="txtNombre" required="required" class="form-control col-md-7 col-xs-12" value="<?php echo $resultado[0]; ?>">
                       </div>
                     </div>
                     <div class="form-group">
                       <label class="control-label col-md-3 col-sm-3 col-xs-12" for="last-name">Apellido Paterno <span class="required">*</span>
                       </label>
                       <div class="col-md-6 col-sm-6 col-xs-12">
-                        <input type="text" id="txtPaterno" name="txtPaterno" required="required" class="form-control col-md-7 col-xs-12">
+                        <input type="text" id="txtPaterno" name="txtPaterno" required="required" class="form-control col-md-7 col-xs-12" value="<?php echo $resultado[1]; ?>">
                       </div>
                     </div>
                     <div class="form-group">
                       <label class="control-label col-md-3 col-sm-3 col-xs-12" for="last-name">Apellido Materno <span class="required">*</span>
                       </label>
                       <div class="col-md-6 col-sm-6 col-xs-12">
-                        <input type="text" id="txtMaterno" name="txtMaterno" required="required" class="form-control col-md-7 col-xs-12">
+                        <input type="text" id="txtMaterno" name="txtMaterno" required="required" class="form-control col-md-7 col-xs-12" value="<?php echo $resultado[2]; ?>">
                       </div>
                     </div>
                     <div class="form-group">
                       <label class="control-label col-md-3 col-sm-3 col-xs-12">Perfil</label>
                       <div class="col-md-6 col-sm-6 col-xs-12">
-                        <select class="form-control">
-                          <option>Choose option</option>
-                          <option>Option one</option>
-                          <option>Option two</option>
-                          <option>Option three</option>
-                          <option>Option four</option>
-                        </select>
+                          <select name="slcProfile" id="slcProfile"  required><?php getPerfil($conn, $resultado[5]); ?></select>
                       </div>
                     </div>
                       <div class="form-group">

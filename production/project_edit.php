@@ -1,3 +1,6 @@
+<?php   include("sessions.php");
+$idApp = 1;
+?>
 <!DOCTYPE html>
 <html lang="en">
   <head>

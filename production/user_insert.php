@@ -4,6 +4,7 @@ session_start();
 include("connection_db.php");
 include("WS_user.php");
 include("WS_log.php");
+$session_user = $_SESSION["mail"];
 $txtMail = isset($_POST['txtMail']) ? $_POST['txtMail'] : '';
 $txtNombre = isset($_POST['txtNombre']) ? $_POST['txtNombre'] : '';
 $txtPass1 = isset($_POST['txtPass1']) ? $_POST['txtPass1'] : '';
@@ -28,7 +29,7 @@ $existe = userExist($conn,$txtMail);
 if ($existe == "0"){
   $description = "Creacion de usuario " . $txtMail;
   insertUser($conn,$txtMail,$txtNombre,$txtPaterno, $txtMaterno, $passHash,$chkEnabled,$slcProfile, $slcTipo, $txtValorHH);
-  log_app($conn,'INSERT','rodrigo.amigo@connectis-gs.cl',$description);
+  log_app($conn,'INSERT',$session_user,$description);
   $ref="user_list.php";
   $error="&nbsp;&nbsp;&nbsp;<b>Creado usuario $txtMail</b>";
 } else {

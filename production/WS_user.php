@@ -1,8 +1,26 @@
 <?php
 //trae los datos asociados a un usuario determinado
 function getUser($conn,$user){
-  $sql = "SELECT password, nombre, habilitado, idPerfil FROM tbl_usuario WHERE usuario = '$user'";
-  return $resultado;
+  $sql = "SELECT nombre, paterno, materno, tipo, habilitado, idPerfil, valorHH FROM tbl_usuario WHERE mail = '$user'";
+  $rs = $conn->query($sql);
+  $existe = 0;
+  while ($row = $rs->fetch_assoc()) {
+    $existe=1;
+    $resultado[0]=trim($row["nombre"]);
+    $resultado[1]=trim($row["paterno"]);
+    $resultado[2]=trim($row["materno"]);
+    $resultado[3]=trim($row["tipo"]);
+    $habilitado=trim($row["habilitado"]);
+    $resultado[5]=trim($row["idPerfil"]);
+    $resultado[6]=trim($row["valorHH"]);
+    if (trim($habilitado) == "1"){
+      $habilitado = " checked ";
+    } else {
+      $habilitado = "";
+    }
+    $resultado[4] = $habilitado;
+  }
+return $resultado;
 }
 
 //Valida si el usuario que se está creando ya existe
@@ -68,11 +86,9 @@ function getUserList($conn){
       $tipo = trim($row["tipo"]);
       $habilitado = $row["habilitado"];
       if (trim($habilitado) == "1"){
-        $enabled = "Enabled";
-        $badge = "badge-success";
+        $enabled = "Habilitado";
       } else {
-        $enabled = "Disabled";
-        $badge = "badge-danger";
+        $enabled = "Deshabilitado";
       }
       if ($tipo == "P"){
         $tipo = "Propio/Interno";
@@ -80,7 +96,7 @@ function getUserList($conn){
         $tipo = "Externo";
       }
       echo "<tr><td>$usuario</td><td>$nombre</td><td>$perfil</td><td>$tipo</td>";
-      echo "<td><span class='badge $badge '>$enabled</span></td>
+      echo "<td>$enabled</td>
           <td class='text-center'>
             <button type='button' class='btn btn-primary btn-sm' onclick=\"editar('$usuario');\">
                 <i class='fa fa-edit'></i> Edit
@@ -91,19 +107,6 @@ function getUserList($conn){
           </td>
       </tr>";
     }
-}
-
-//asocia un cliente a un usuarios
-function AddClient($conn, $idCliente, $txtUser){
-  $sql = "INSERT INTO tbl_cli_usu (idCliente, usuario) VALUES
-          ('$idCliente','$txtUser')";
-  $res = odbc_exec($conn, $sql);
-}
-
-//asocia un cliente a un usuarios
-function RemoveClient($conn, $idCliente, $txtUser){
-  $sql = "DELETE FROM tbl_cli_usu WHERE idCliente = '$idCliente' and usuario = '$txtUser' ";
-  $res = odbc_exec($conn, $sql);
 }
 
 //elimina un usuario

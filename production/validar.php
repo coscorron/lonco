@@ -13,12 +13,16 @@ $error = "";
 $ref= "";
 if ($resultado[0] == "0"){
   $error = $resultado[1];
+  $description = $error . " de " . $txtUser;
+  log_app($conn,'LOGINNOK','$txtUser','$description');
   $ref="login.php";
 } else {
   $ref = "index.php";
   $_SESSION["mail"] = $txtUser;
   $_SESSION["nombre"] = $resultado[2];
   $_SESSION["idPerfil"] = $resultado[3];
+  $description = "login OK de " . $txtUser;
+  log_app($conn,'LOGIN',$txtUser,$description);
 }
 ?>
 <html>

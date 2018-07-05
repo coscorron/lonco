@@ -4,11 +4,12 @@ session_start();
 include("connection_db.php");
 include("WS_user.php");
 include("WS_log.php");
+$session_user = $_SESSION["mail"];
 $txtMail = isset($_POST['txtMail']) ? $_POST['txtMail'] : '';
 
 RemoveUser($conn, $txtMail);
 $description = "Eliminacion de usuario " . $txtMail;
-log_app($conn,'DELETE','rodrigo.amigo@connectis-gs.cl',$description);
+log_app($conn,'DELETE',$session_user,$description);
 $ref="user_list.php";
 $error="&nbsp;&nbsp;&nbsp;<b>Eliminado usuario $txtMail</b>";
 ?>

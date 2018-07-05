@@ -4,7 +4,7 @@ function getPerfil($conn,$selected){
   $rs = $conn->query($sql);
 
 
-    echo "<option $select value=''>Seleccionar</option>";
+    echo "<option value=''>Seleccionar</option>";
     while ($row = $rs->fetch_assoc()) {
       $idPerfil = $row["idPerfil"];
       $nombrePerfil = $row["nombre"];
@@ -13,7 +13,7 @@ function getPerfil($conn,$selected){
       } else {
         $select = " ";
       }
-      echo "<option $selected  $idPerfil value='$idPerfil'>$nombrePerfil</option>";
+      echo "<option $select value='$idPerfil'>$nombrePerfil</option>";
     }
 }
  ?>
