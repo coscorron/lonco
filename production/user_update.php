@@ -3,12 +3,18 @@
 session_start();
 include("connection_db.php");
 include("WS_user.php");
-$txtUser = isset($_POST['txtUser2']) ? $_POST['txtUser2'] : '';
+include("WS_log.php");
+$session_user = $_SESSION["mail"];
+$txtMail = isset($_POST['txtMail']) ? $_POST['txtMail'] : '';
+$txtPass1 = isset($_POST['txtPass1']) ? $_POST['txtPass1'] : '';
+$txtPass2 = isset($_POST['txtPass2']) ? $_POST['txtPass2'] : '';
 $txtNombre = isset($_POST['txtNombre']) ? $_POST['txtNombre'] : '';
-$txtPass = isset($_POST['txtPass']) ? $_POST['txtPass'] : '';
+$txtPaterno = isset($_POST['txtPaterno']) ? $_POST['txtPaterno'] : '';
+$txtMaterno = isset($_POST['txtMaterno']) ? $_POST['txtMaterno'] : '';
+$slcTipo = isset($_POST['slcTipo']) ? $_POST['slcTipo'] : '';
 $chkEnabled = isset($_POST['chkEnabled']) ? $_POST['chkEnabled'] : '';
 $slcProfile = isset($_POST['slcProfile']) ? $_POST['slcProfile'] : '';
-
+$txtValorHH = isset($_POST['txtValorHH']) ? $_POST['txtValorHH'] : '';
 if ($chkEnabled == 'on'){
   $chkEnabled = 1;
 } else {
@@ -16,18 +22,17 @@ if ($chkEnabled == 'on'){
 }
 
 //Valida si el correo existe
-$change = changePass($conn,$txtUser,$txtPass);
-updateUser($conn,$txtUser,$txtNombre,$txtPass,$chkEnabled,$slcProfile,$change);
+$change = changePass($conn,$txtMail,$txtPass1);
+updateUser($conn,$txtMail,$txtNombre,$txtPaterno,$txtMaterno,$txtPass1,$chkEnabled,$slcProfile,$slcTipo,$txtValorHH,$change);
+$description = "Actualizado el usuario " . $txtMail;
+log_app($conn,'UPDATE',$session_user,$description);
 $ref="user_list.php";
-$error="&nbsp;&nbsp;&nbsp;<b>correctly modified user $txtUser</b>";
+$error="&nbsp;&nbsp;&nbsp;<b>Usuario $txtMail actualizado!</b>";
 ?>
 <html>
 <body>
 <form name="form1" id="form1" method="post" action="<?php echo $ref; ?>">
-  <input type="hidden" id="txtUser" name="txtUser" value="<?php echo $txtUser; ?>">
-  <input type="hidden" id="txtNombre" name="txtNombre" value="<?php echo $txtNombre; ?>">
-  <input type="hidden" id="slcProfile" name="slcProfile" value="<?php echo $slcProfile; ?>">
-  <input type="hidden" id="chkEnabled" name="chkEnabled" value="<?php echo $chkEnabled; ?>">
+  <input type="hidden" id="txtMail" name="txtMail" value="<?php echo $txtMail; ?>">
   <input type="hidden" id="txtError" name="txtError" value="<?php echo $error; ?>">
 </form>
 <script>

@@ -36,16 +36,22 @@ function userExist($conn,$user){
 }
 
 function changePass($conn,$user,$pass){
-  $sql = "select password from tbl_usuario where usuario = '$user' and password = '$pass'";
-/*  $rs=odbc_exec($conn,$sql);
-  if (!$rs)
-    {exit("Error");}
-
-    $existe = 0;
-    while (odbc_fetch_row($rs)) {
-      $existe=1;
+  if ($pass != ""){
+    $sql = "select password from tbl_usuario where mail = '$user' ";
+    $rs = $conn->query($sql);
+      while ($row = $rs->fetch_assoc()) {
+        $password = trim($row["password"]);
+      }
+    if (password_verify($pass, $password)) {
+      //no se actualiza la pass
+      $existe = 1;
+    } else {
+      $existe = 0;
     }
-  return $existe;*/
+  } else {
+    $existe = 1;
+  }
+  return $existe;
 }
 
 
@@ -58,15 +64,17 @@ function insertUser($conn,$txtMail,$txtNombre,$txtPaterno, $txtMaterno, $txtPass
 }
 
 //Actualiza usuario
-function updateUser($conn,$txtUser,$txtNombre,$txtPass,$chkEnabled,$slcProfile,$change){
-  $sql = "UPDATE tbl_usuario set nombre = '$txtNombre', idPerfil = $slcProfile, habilitado = $chkEnabled ";
+function updateUser($conn,$txtMail,$txtNombre,$txtPaterno,$txtMaterno,$txtPass,$chkEnabled,$slcProfile,$slcTipo,$txtValorHH,$change){
+  $sql = "UPDATE tbl_usuario set nombre = '$txtNombre', paterno = '$txtPaterno', materno='$txtMaterno',
+          idPerfil = $slcProfile, habilitado = $chkEnabled, tipo = '$slcTipo', valorHH ='$txtValorHH' ";
   if ($change ==0){
-    $sql2 = " , password = '$txtPass' ";
+    $passHash = password_hash($txtPass, PASSWORD_BCRYPT);
+    $sql2 = " , password = '$passHash' ";
   } else {
     $sql2= "";
   }
-  $sql = $sql . $sql2 . " WHERE usuario = '$txtUser'";
-  $res = odbc_exec($conn, $sql);
+  $sql = $sql . $sql2 . " WHERE mail = '$txtMail'";
+  $conn->query($sql);
 }
 
 //trae los usuarios existentes en la base de datos

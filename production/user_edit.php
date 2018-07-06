@@ -30,7 +30,7 @@ $idApp = 1;
                 </div>
                 <div class="x_content">
                   <br />
-                  <form id="demo-form2" data-parsley-validate class="form-horizontal form-label-left">
+                  <form id="demo-form2" data-parsley-validate class="form-horizontal form-label-left" method="post" action="user_update.php">
 
                     <div class="form-group">
                       <label class="control-label col-md-3 col-sm-3 col-xs-12" for="first-name">Mail <span class="required">*</span>
@@ -51,7 +51,7 @@ $idApp = 1;
                       <label class="control-label col-md-3 col-sm-3 col-xs-12" for="first-name">Confirmar Password
                       </label>
                       <div class="col-md-6 col-sm-6 col-xs-12">
-                        <input type="mail" id="txtPass2" name="txtPass2"  class="form-control col-md-7 col-xs-12">
+                        <input type="password" id="txtPass2" name="txtPass2"  class="form-control col-md-7 col-xs-12">
                       </div>
                     </div>
                     <div class="form-group">
@@ -84,10 +84,9 @@ $idApp = 1;
                       <div class="form-group">
                         <label class="control-label col-md-3 col-sm-3 col-xs-12">Tipo</label>
                         <div class="col-md-6 col-sm-6 col-xs-12">
-                          <select class="form-control">
-                            <option>Choose option</option>
-                            <option>P - Propio</option>
-                            <option>E - Externo / Subcontratado</option>
+                          <select id="slcTipo" name="slcTipo" required="required">
+                            <option <?php if($resultado[3] == "P") { echo " selected "; } ?>>P - Propio</option>
+                            <option <?php if($resultado[3] == "E") { echo " selected "; } ?>>E - Externo / Subcontratado</option>
                           </select>
                         </div>
                     </div>
@@ -95,7 +94,7 @@ $idApp = 1;
                       <label class="control-label col-md-3 col-sm-3 col-xs-12">Habilitado</label>
                       <div class="col-md-6 col-sm-6 col-xs-12">
                         <label>
-                           <input type="checkbox" class="js-switch" checked />
+                           <input type="checkbox"  id="chkEnabled" name="chkEnabled"  class="js-switch" <?php echo $resultado[4] ; ?>/>
                          </label>
                       </div>
                     </div>
@@ -103,7 +102,7 @@ $idApp = 1;
                       <label class="control-label col-md-3 col-sm-3 col-xs-12" for="last-name">Valor Hora <span class="required">*</span>
                       </label>
                       <div class="col-md-6 col-sm-6 col-xs-12">
-                        <input type="number" id="txtValorHH" name="txtValorHH" required="required" class="form-control col-md-7 col-xs-12">
+                        <input type="number" id="txtValorHH" name="txtValorHH" required="required" class="form-control col-md-7 col-xs-12" value="<?php echo $resultado[6] ; ?>">
                       </div>
                     </div>                    <div class="ln_solid"></div>
                     <div class="form-group">
