@@ -33,7 +33,7 @@ if ($existe == "0"){
   $ref="user_list.php";
   $error="&nbsp;&nbsp;&nbsp;<b>Creado usuario $txtMail</b>";
 } else {
-  $error="&nbsp;&nbsp;&nbsp;<b>Usuario ya existe</b>";
+  $error="<b>Usuario ya existe</b>";
   $ref="user_add.php";
 }
 ?>

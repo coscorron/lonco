@@ -8,7 +8,7 @@ $idApp = 1;
       include("referencia.php");
       include("connection_db.php");
       include("WS_checklist.php");
-      $idProyecto = isset($_POST['txtidProyecto']) ? $_POST['txtidProyecto'] : '';
+      $txtProject = isset($_POST['txtProject']) ? $_POST['txtProject'] : '';
     ?>
     <script>
     function Volver(){
@@ -35,8 +35,8 @@ $idApp = 1;
                 <div class="x_content">
                   <br />
                   <form id="form1" name="form1" data-parsley-validate class="form-horizontal form-label-left" method="post" action="checklist_answer.php">
-                    <input type="hidden" id="txtidProyecto" name="txtidProyecto" value="<?php echo $idProyecto; ?>">
-                    <?php $cont = getCheckProyecto($conn, $idProyecto); ?>
+                    <input type="hidden" id="txtProject" name="txtProject" value="<?php echo $txtProject; ?>">
+                    <?php $cont = getCheckProyecto($conn, $txtProject); ?>
                     <input type="hidden" id="txtCont" name="txtCont" value="<?php echo $cont; ?>">
 
 

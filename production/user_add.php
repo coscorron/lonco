@@ -8,6 +8,9 @@ $idApp = 1;
       include("referencia.php");
       include("connection_db.php");
       include("WS_perfil.php");
+
+      $txtMail = isset($_POST['txtMail']) ? $_POST['txtMail'] : '';
+      $txtError = isset($_POST['txtError']) ? $_POST['txtError'] : '';
     ?>
   </head>
   <body class="nav-md">
@@ -22,7 +25,7 @@ $idApp = 1;
             <div class="col-md-12 col-sm-12 col-xs-12">
               <div class="x_panel">
                 <div class="x_title">
-                  <h2>Nuevo Usuario<small></small></h2>
+                  <h2>Nuevo Usuario<?php echo "     ".$txtError; ?></h2>
                   <div class="clearfix"></div>
                 </div>
                 <div class="x_content">

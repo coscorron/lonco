@@ -1,4 +1,22 @@
 <?php
+
+function getUser2($conn,$selected){
+  $sql = "SELECT mail, nombre, paterno, materno FROM tbl_usuario WHERE eliminado = 0 and habilitado = 1 ORDER BY paterno ASC";
+  $rs = $conn->query($sql);
+
+
+    echo "<option value=''>Seleccionar</option>";
+    while ($row = $rs->fetch_assoc()) {
+      $mail = $row["mail"];
+      $nombre = $row["nombre"] . " " .$row["paterno"];
+      if (trim($selected) == trim($mail)){
+        $select = " selected ";
+      } else {
+        $select = " ";
+      }
+      echo "<option $select value='$mail'>$nombre</option>";
+    }
+}
 //trae los datos asociados a un usuario determinado
 function getUser($conn,$user){
   $sql = "SELECT nombre, paterno, materno, tipo, habilitado, idPerfil, valorHH FROM tbl_usuario WHERE mail = '$user'";

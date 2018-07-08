@@ -6,10 +6,22 @@ $idApp = 1;
   <head>
     <?php
       include("referencia.php");
+      include("connection_db.php");
+      include("WS_project.php");
+      $txtError = isset($_POST['txtError']) ? $_POST['txtError'] : '';
     ?>
     <script>
-    function Editar(){
-      location.href = 'project_edit.php';
+    function editar(project){
+      form2.txtProject.value = project;
+      form2.action = "project_edit.php";
+      form2.submit();
+    }
+    function Remove(project){
+      form2.txtProject.value = project;
+    }
+    function Delete(){
+      form2.action="project_remove.php";
+      form2.submit();
     }
     </script>
   </head>
@@ -25,11 +37,12 @@ $idApp = 1;
             <div class="col-md-12 col-sm-12 col-xs-12">
               <div class="x_panel">
                 <div class="x_title">
-                  <h2>Listado de Proyectos</h2>
+                  <h2>Listado de Proyectos  <?php  echo $txtError; ?></h2>
                   <div class="clearfix"></div>
                 </div>
                 <div class="x_content">
-                  <form id="form2" name="form2" data-parsley-validate class="form-horizontal form-label-left">
+                  <form id="form2" name="form2" data-parsley-validate class="form-horizontal form-label-left" method="post" action="">
+                    <input type="hidden" id="txtProject" name="txtProject" value="">
                         <div class="x_content">
                           <table id="datatable-buttons" class="table table-striped table-bordered">
                             <thead>
@@ -43,51 +56,8 @@ $idApp = 1;
                                 <th>Acciones</th>
                               </tr>
                             </thead>
-
-
                             <tbody>
-                              <tr>
-                                <td>Tiger Nixon</td>
-                                <td>System Architect</td>
-                                <td>Edinburgh</td>
-                                <td>61</td>
-                                <td>2011/04/25</td>
-                                <td>$320,800</td>
-                                <td>
-                                  <div class="btn-group  btn-group-sm">
-                                    <button class="btn btn-info" type="button" onclick="Editar();">Editar</button>
-                                    <button class="btn btn-danger" type="button" data-toggle="modal" data-target=".bs-example-modal-sm">Eliminar</button>
-                                  </div>
-                                </td>
-                              </tr>
-                              <tr>
-                                <td>Garrett Winters</td>
-                                <td>Accountant</td>
-                                <td>Tokyo</td>
-                                <td>63</td>
-                                <td>2011/07/25</td>
-                                <td>$320,800</td>
-                                <td>
-                                  <div class="btn-group  btn-group-sm">
-                                    <button class="btn btn-info" type="button" onclick="Editar();">Editar</button>
-                                    <button class="btn btn-danger" type="button" data-toggle="modal" data-target=".bs-example-modal-sm">Eliminar</button>
-                                  </div>
-                                </td>
-                              </tr>
-                              <tr>
-                                <td>Ashton Cox</td>
-                                <td>Junior Technical Author</td>
-                                <td>San Francisco</td>
-                                <td>66</td>
-                                <td>2009/01/12</td>
-                                <td>$86,000</td>
-                                <td>
-                                  <div class="btn-group  btn-group-sm">
-                                    <button class="btn btn-info" type="button" onclick="Editar();">Editar</button>
-                                    <button class="btn btn-danger" type="button" data-toggle="modal" data-target=".bs-example-modal-sm">Eliminar</button>
-                                  </div>
-                                </td>
-                              </tr>
+                              <?php getProjectList($conn); ?>
                             </tbody>
                           </table>
                         </div>
@@ -106,11 +76,11 @@ $idApp = 1;
                       <h4 class="modal-title" id="myModalLabel2">Confirmación de eliminación</h4>
                     </div>
                     <div class="modal-body">
-                      <p>¿está seguro de eliminar el proyecto XXXXXXX</p>
+                      <p>¿está seguro de eliminar el proyecto?</p>
                     </div>
                     <div class="modal-footer">
                       <button type="button" class="btn btn-default" data-dismiss="modal">Cancelar</button>
-                      <button type="button" class="btn btn-danger">Eliminar</button>
+                      <button type="button" class="btn btn-danger" onclick="Delete();">Eliminar</button>
                     </div>
 
                   </div>

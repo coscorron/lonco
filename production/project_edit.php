@@ -7,10 +7,13 @@ $idApp = 1;
     <?php
       include("referencia.php");
       include("connection_db.php");
-      include("WS_perfil.php");
+      include("WS_project.php");
       include("WS_checklist.php");
-      $idProyecto = isset($_POST['txtidProyecto']) ? $_POST['txtidProyecto'] : '';
-      $idProyecto = 1;
+      include("WS_client.php");
+      include("WS_user.php");
+
+      $txtProject = isset($_POST['txtProject']) ? $_POST['txtProject'] : '';
+      $resultado = getProject($conn,$txtProject);
     ?>
     <script>
     function check(){
@@ -36,45 +39,45 @@ $idApp = 1;
                 </div>
                 <div class="x_content">
                   <br />
-                  <form id="form1" name="form1" data-parsley-validate class="form-horizontal form-label-left" method="post">
+                  <form id="form1" name="form1" data-parsley-validate class="form-horizontal form-label-left" method="post" action="project_update.php">
                     <div class="form-group">
                       <label class="control-label col-md-3 col-sm-3 col-xs-12">Cliente</label>
                       <div class="col-md-6 col-sm-6 col-xs-12">
-                        <select name="slcCliente" id="slcCliente"  required><?php getPerfil($conn, 0); ?></select>
+                        <select name="slcCliente" id="slcCliente"  required><?php getCliente($conn, $resultado[0]); ?></select>
                       </div>
                     </div>
                     <div class="form-group">
                       <label class="control-label col-md-3 col-sm-3 col-xs-12" for="first-name">Nombre <span class="required">*</span>
                       </label>
                       <div class="col-md-6 col-sm-6 col-xs-12">
-                        <input type="text" id="txtNombre" name="txtNombre" required="required" class="form-control col-md-7 col-xs-12">
-                        <input type="hidden" id="txtidProyecto" name="txtidProyecto" value="<?php echo $idProyecto; ?>">
+                        <input type="text" id="txtNombre" name="txtNombre" required="required" class="form-control col-md-7 col-xs-12" value="<?php echo $resultado[1]; ?>">
+                        <input type="hidden" id="txtProject" name="txtProject" value="<?php echo $txtProject; ?>">
                       </div>
                     </div>
                     <div class="form-group">
                       <label class="control-label col-md-3 col-sm-3 col-xs-12" for="first-name">Centro Costo <span class="required">*</span>
                       </label>
                       <div class="col-md-6 col-sm-6 col-xs-12">
-                        <input type="text" id="txtCC" name="txtCC" required="required"  class="form-control col-md-7 col-xs-12">
+                        <input type="text" id="txtCC" name="txtCC" required="required"  class="form-control col-md-7 col-xs-12"  value="<?php echo $resultado[2]; ?>">
                       </div>
                     </div>
                     <div class="form-group">
                       <label class="control-label col-md-3 col-sm-3 col-xs-12">Gerente <span class="required">*</span></label>
                       <div class="col-md-6 col-sm-6 col-xs-12">
-                        <select name="slcGerente" id="slcGerente"  required="required"><?php getPerfil($conn, 0); ?></select>
+                        <select name="slcGerente" id="slcGerente"  required="required"><?php getUser2($conn, $resultado[3]); ?></select>
                       </div>
                     </div>
                     <div class="form-group">
                       <label class="control-label col-md-3 col-sm-3 col-xs-12">Jefe de Proyecto <span class="required">*</span></label>
                       <div class="col-md-6 col-sm-6 col-xs-12">
-                        <select name="slcJefe" id="slcJefe"  required="required"><?php getPerfil($conn, 0); ?></select>
+                        <select name="slcJefe" id="slcJefe"  required="required"><?php getUser2($conn, $resultado[4]); ?></select>
                       </div>
                     </div>
                     <div class="form-group">
                       <label class="control-label col-md-3 col-sm-3 col-xs-12"  for="first-name">Plazo en meses <span class="required">*</span>
                       </label>
                       <div class="col-md-6 col-sm-6 col-xs-12">
-                        <input type="number" id="txtPlazo" name="txtPlazo" required="required"  class="form-control col-md-7 col-xs-12">
+                        <input type="number" id="txtPlazo" name="txtPlazo" required="required"  class="form-control col-md-7 col-xs-12"  value="<?php echo $resultado[5]; ?>">
                       </div>
                     </div>
                     <div class='form-group'>
@@ -82,7 +85,7 @@ $idApp = 1;
                       </label>
                         <div class="col-md-6 col-sm-6 col-xs-12">
                             <div class='input-group date' id='myDatepicker2'>
-                                <input type='text' class="form-control" />
+                                <input type='text'  id="txtFInicio" name="txtFInicio" class="form-control" required=""   value="<?php echo $resultado[6]; ?>" />
                                 <span class="input-group-addon">
                                    <span class="glyphicon glyphicon-calendar"></span>
                                 </span>
@@ -94,7 +97,7 @@ $idApp = 1;
                       </label>
                         <div class="col-md-6 col-sm-6 col-xs-12">
                             <div class='input-group date' id='myDatepicker3'>
-                                <input type='text' class="form-control" />
+                                <input type='text'  id="txtFTermino" name="txtFTermino" class="form-control" required=""  value="<?php echo $resultado[7]; ?>" />
                                 <span class="input-group-addon">
                                    <span class="glyphicon glyphicon-calendar"></span>
                                 </span>
@@ -107,7 +110,7 @@ $idApp = 1;
                       <div class="col-md-6 col-sm-6 col-xs-12">
                         <button class="btn btn-primary" type="button" onclick="check();"><i class="fa fa-check-square-o"></i> Checklist</button>
                         <div class="progress">
-                          <div class="progress-bar progress-bar-success" title="<?php echo getChecklistAnswered($conn, $idProyecto); ?>%"  data-toggle="tooltip" data-placement="bottom" data-transitiongoal="<?php echo getChecklistAnswered($conn, $idProyecto); ?>"></div>
+                          <div class="progress-bar progress-bar-success" title="<?php echo getChecklistAnswered($conn, $txtProject); ?>%"  data-toggle="tooltip" data-placement="bottom" data-transitiongoal="<?php echo getChecklistAnswered($conn, $txtProject); ?>"></div>
                         </div>
                       </div>
                     </div>

@@ -13,7 +13,10 @@ function getChecklistAnswered($conn, $idProyecto){
   } else {
     $porcentaje = ceil(($contestada * 100) / $total);
   }
-
+  if($total == $contestada){
+    $sql = "UPDATE estadoCHK = 1 WHERE idProyecto = $idProyecto";
+    $conn->query($sql);
+  }
   return $porcentaje;
 }
 
@@ -66,7 +69,7 @@ function getCheckProyecto($conn,$idProyecto){
           if ($respuesta == "SI"){ echo " selected "; }
           echo ">SI</option>
                 <option value='NO'";
-          if ($respuesta == "NO"){ echo " selected "; }            
+          if ($respuesta == "NO"){ echo " selected "; }
           echo ">NO</option>
               </select>
             </p>
