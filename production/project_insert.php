@@ -11,11 +11,12 @@ $txtCC = isset($_POST['txtCC']) ? $_POST['txtCC'] : '';
 $slcGerente = isset($_POST['slcGerente']) ? $_POST['slcGerente'] : '';
 $slcJefe = isset($_POST['slcJefe']) ? $_POST['slcJefe'] : '';
 $txtPlazo = isset($_POST['txtPlazo']) ? $_POST['txtPlazo'] : '';
+$txtEsfuerzoHH = isset($_POST['txtEsfuerzoHH']) ? $_POST['txtEsfuerzoHH'] : '';
 $txtFInicio = isset($_POST['txtFInicio']) ? $_POST['txtFInicio'] : '';
 $txtFTermino = isset($_POST['txtFTermino']) ? $_POST['txtFTermino'] : '';
 
 $description = "  Creacion de proyecto " . $txtNombre;
-  insertProject($conn,$slcCliente,$txtNombre,$txtCC, $slcGerente, $slcJefe,$txtPlazo,$txtFInicio, $txtFTermino);
+  insertProject($conn,$slcCliente,$txtNombre,$txtCC, $slcGerente, $slcJefe,$txtPlazo,$txtEsfuerzoHH,$txtFInicio, $txtFTermino);
   log_app($conn,'INSERT',$session_user,$description);
   $ref="project_list.php";
   $error="   <b>Creado proyecto $txtNombre</b>";

@@ -12,11 +12,12 @@ $txtCC = isset($_POST['txtCC']) ? $_POST['txtCC'] : '';
 $slcGerente = isset($_POST['slcGerente']) ? $_POST['slcGerente'] : '';
 $slcJefe = isset($_POST['slcJefe']) ? $_POST['slcJefe'] : '';
 $txtPlazo = isset($_POST['txtPlazo']) ? $_POST['txtPlazo'] : '';
+$txtEsfuerzoHH = isset($_POST['txtEsfuerzoHH']) ? $_POST['txtEsfuerzoHH'] : '';
 $txtFInicio = isset($_POST['txtFInicio']) ? $_POST['txtFInicio'] : '';
 $txtFTermino = isset($_POST['txtFTermino']) ? $_POST['txtFTermino'] : '';
 
 $description = "  Actualizado el proyecto " . $txtNombre;
-  updateProject($conn,$txtProject,$slcCliente,$txtNombre,$txtCC, $slcGerente, $slcJefe,$txtPlazo,$txtFInicio, $txtFTermino);
+  updateProject($conn,$txtProject,$slcCliente,$txtNombre,$txtCC, $slcGerente, $slcJefe,$txtPlazo,$txtEsfuerzoHH,$txtFInicio, $txtFTermino);
   log_app($conn,'UPDATE',$session_user,$description);
   $ref="project_list.php";
   $error="   <b>Proyecto $txtNombre actualizado!</b>";

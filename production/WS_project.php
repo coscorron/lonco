@@ -43,11 +43,11 @@ function RemoveProject($conn, $txtProject){
 
 //Ingresa un nuevo proyecto a la tabla tbl_proyecto
 ;
-function insertProject($conn,$slcCliente,$txtNombre,$txtCC, $slcGerente, $slcJefe,$txtPlazo,$txtFInicio, $txtFTermino){
+function insertProject($conn,$slcCliente,$txtNombre,$txtCC, $slcGerente, $slcJefe,$txtPlazo,$txtEsfuerzoHH,$txtFInicio, $txtFTermino){
   $fechaI = substr($txtFInicio,6,4) . "-" . substr($txtFInicio,3,2) . "-" . substr($txtFInicio,0,2);
   $fechaT = substr($txtFTermino,6,4) . "-" . substr($txtFTermino,3,2) . "-" . substr($txtFTermino,0,2);
-  $sql = "INSERT INTO tbl_proyecto (idCliente, nombre, cc, gerente, jefe, plazo, fechaInicio, fechaTermino, estadoCHK, eliminado) VALUES
-          ($slcCliente,'$txtNombre','$txtCC','$slcGerente','$slcJefe',$txtPlazo,'$fechaI','$fechaT',0,0)";
+  $sql = "INSERT INTO tbl_proyecto (idCliente, nombre, cc, gerente, jefe, plazo,esfuerzoHH, fechaInicio, fechaTermino, estadoCHK, eliminado) VALUES
+          ($slcCliente,'$txtNombre','$txtCC','$slcGerente','$slcJefe',$txtPlazo,$txtEsfuerzoHH,'$fechaI','$fechaT',0,0)";
   if ($conn->query($sql) === TRUE) {
       $last_id = $conn->insert_id;
       $sql = "insert into tbl_proy_respuesta (idProyecto, idPregunta, respuesta, comentario, fecha)
@@ -61,7 +61,7 @@ function insertProject($conn,$slcCliente,$txtNombre,$txtCC, $slcGerente, $slcJef
 }
 
 function getProject($conn,$project){
-  $sql = "SELECT idCliente, nombre, cc, gerente, jefe, plazo, fechaInicio, fechaTermino FROM tbl_proyecto  WHERE idProyecto = '$project'";
+  $sql = "SELECT idCliente, nombre, cc, gerente, jefe, plazo, esfuerzoHH, fechaInicio, fechaTermino FROM tbl_proyecto  WHERE idProyecto = '$project'";
   $rs = $conn->query($sql);
   $existe = 0;
   while ($row = $rs->fetch_assoc()) {
@@ -72,17 +72,18 @@ function getProject($conn,$project){
     $resultado[3]=trim($row["gerente"]);
     $resultado[4]=trim($row["jefe"]);
     $resultado[5]=trim($row["plazo"]);
+    $resultado[8]=trim($row["esfuerzoHH"]);
     $resultado[6]=trim(substr($row["fechaInicio"],8,2)."/".substr($row["fechaInicio"],5,2)."/".substr($row["fechaInicio"],0,4));
     $resultado[7]=trim(substr($row["fechaTermino"],8,2)."/".substr($row["fechaTermino"],5,2)."/".substr($row["fechaTermino"],0,4));
 
   }
 return $resultado;
 }
-function updateProject($conn,$txtProject,$slcCliente,$txtNombre,$txtCC, $slcGerente, $slcJefe,$txtPlazo,$txtFInicio, $txtFTermino){
+function updateProject($conn,$txtProject,$slcCliente,$txtNombre,$txtCC, $slcGerente, $slcJefe,$txtPlazo,$txtEsfuerzoHH,$txtFInicio, $txtFTermino){
   $fechaI = substr($txtFInicio,6,4) . "-" . substr($txtFInicio,3,2) . "-" . substr($txtFInicio,0,2);
   $fechaT = substr($txtFTermino,6,4) . "-" . substr($txtFTermino,3,2) . "-" . substr($txtFTermino,0,2);
   $sql = "UPDATE tbl_proyecto set idCliente = $slcCliente, nombre = '$txtNombre', cc = '$txtCC', gerente='$slcGerente',
-          jefe = '$slcJefe', plazo = $txtPlazo, fechaInicio = '$fechaI', fechaTermino ='$fechaT'
+          jefe = '$slcJefe', plazo = $txtPlazo, esfuerzoHH = $txtEsfuerzoHH, fechaInicio = '$fechaI', fechaTermino ='$fechaT'
           WHERE idProyecto = $txtProject";
   $conn->query($sql);
 }
