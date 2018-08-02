@@ -7,7 +7,7 @@ $idApp = 1;
     <?php
       include("referencia.php");
       include("connection_db.php");
-      include("WS_project.php");
+      include("WS_expenses.php");
       $txtError = isset($_POST['txtError']) ? $_POST['txtError'] : '';
       $txtProyecto = isset($_POST['txtProyecto']) ? $_POST['txtProyecto'] : '';
       $resultado = getProject($conn,$txtProyecto);
@@ -18,16 +18,16 @@ $idApp = 1;
       form2.action = "expenses_add.php";
       form2.submit();
     }
-    function editar(project){
-      form2.txtProject.value = project;
-      form2.action = "project_edit.php";
+    function editar(expense){
+      form2.txtExpense.value = expense;
+      form2.action = "expenses_edit.php";
       form2.submit();
     }
-    function Remove(project){
-      form2.txtProject.value = project;
+    function Remove(expense){
+      form2.txtExpense.value = expense;
     }
     function Delete(){
-      form2.action="project_remove.php";
+      form2.action="expenses_remove.php";
       form2.submit();
     }
     </script>
@@ -50,6 +50,7 @@ $idApp = 1;
                 <div class="x_content">
                   <form id="form2" name="form2" data-parsley-validate class="form-horizontal form-label-left" method="post" action="">
                     <input type="hidden" id="txtProject" name="txtProject" value="<?php echo $txtProyecto; ?>">
+                    <input type="hidden" id="txtExpense" name="txtExpense" value="">
                         <div class="x_content">
                           <table id="datatable-buttons" class="table table-striped table-bordered">
                             <thead>
@@ -65,7 +66,7 @@ $idApp = 1;
                               </tr>
                             </thead>
                             <tbody>
-                              <?php getProjectList($conn); ?>
+                              <?php getExpenseList($conn,$resultado[0]); ?>
                             </tbody>
                           </table>
                         </div>
@@ -84,7 +85,7 @@ $idApp = 1;
                       <h4 class="modal-title" id="myModalLabel2">Confirmación de eliminación</h4>
                     </div>
                     <div class="modal-body">
-                      <p>¿está seguro de eliminar el proyecto?</p>
+                      <p>¿está seguro de eliminar el gasto?</p>
                     </div>
                     <div class="modal-footer">
                       <button type="button" class="btn btn-default" data-dismiss="modal">Cancelar</button>
