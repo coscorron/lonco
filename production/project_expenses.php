@@ -8,6 +8,7 @@ $idApp = 1;
       include("referencia.php");
       include("connection_db.php");
       include("WS_expenses.php");
+      include("WS_project.php");
       $txtError = isset($_POST['txtError']) ? $_POST['txtError'] : '';
       $txtProyecto = isset($_POST['txtProyecto']) ? $_POST['txtProyecto'] : '';
       $resultado = getProject($conn,$txtProyecto);

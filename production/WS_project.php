@@ -1,6 +1,6 @@
 <?php
 function getProjectList($conn){
-  $sql = "SELECT tc.nombre as nombreCli, tp.nombre as nomPro, tp.cc, tu.nombre, tu.paterno, tp.jefe, tp.fechaTermino, tp.idProyecto
+  $sql = "SELECT tc.nombre as nombreCli, tp.nombre as nomPro, tp.cc, tu.nombre, tu.paterno, tp.jefe, tp.fechaTermino, tp.idProyecto, tp.precioUF, tp.precioCLP, tp.margenCLP, tp.margenP
           FROM tbl_proyecto tp, tbl_cliente tc, tbl_usuario tu
           WHERE tc.idCliente = tp.idCliente
           AND tp.eliminado = 0 and tc.eliminado = 0
@@ -60,7 +60,7 @@ function insertProject($conn,$slcCliente,$txtNombre,$txtCC, $slcGerente, $slcJef
 }
 
 function getProject($conn,$project){
-  $sql = "SELECT idCliente, nombre, cc, gerente, jefe, plazo, esfuerzoHH, fechaInicio, fechaTermino FROM tbl_proyecto  WHERE idProyecto = '$project'";
+  $sql = "SELECT idCliente, nombre, cc, gerente, jefe, plazo, esfuerzoHH, fechaInicio, fechaTermino, precioUF, precioCLP, margenCLP, margenP FROM tbl_proyecto  WHERE idProyecto = '$project'";
   $rs = $conn->query($sql);
   $existe = 0;
   while ($row = $rs->fetch_assoc()) {
@@ -74,6 +74,10 @@ function getProject($conn,$project){
     $resultado[8]=trim($row["esfuerzoHH"]);
     $resultado[6]=trim(substr($row["fechaInicio"],8,2)."/".substr($row["fechaInicio"],5,2)."/".substr($row["fechaInicio"],0,4));
     $resultado[7]=trim(substr($row["fechaTermino"],8,2)."/".substr($row["fechaTermino"],5,2)."/".substr($row["fechaTermino"],0,4));
+    $resultado[9]=trim($row["precioUF"]);
+    $resultado[10]=trim($row["precioCLP"]);
+    $resultado[11]=trim($row["margenCLP"]);
+    $resultado[12]=trim($row["margenP"]);
 
   }
 return $resultado;

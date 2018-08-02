@@ -62,6 +62,14 @@ $idApp = 1;
                       </div>
                     </div>
                     <div class="form-group">
+                      <label class="control-label col-md-3 col-sm-3 col-xs-12" for="first-name">Precio Final <span class="required">*</span>
+                      </label>
+                      <div class="col-md-6 col-sm-6 col-xs-12">
+                        <input type="text" id="txtUF" name="txtUF" required="required"   value="<?php echo $resultado[9]; ?>"> UF
+                        <input type="text" id="txtCLP" name="txtCLP" required="required"   value="<?php echo $resultado[10]; ?>"> CLP
+                      </div>
+                    </div>
+                    <div class="form-group">
                       <label class="control-label col-md-3 col-sm-3 col-xs-12">Gerente <span class="required">*</span></label>
                       <div class="col-md-6 col-sm-6 col-xs-12">
                         <select name="slcGerente" id="slcGerente"  required="required"><?php getUser2($conn, $resultado[3]); ?></select>
@@ -110,6 +118,14 @@ $idApp = 1;
                                 </span>
                             </div>
                         </div>
+                    </div>
+                    <div class="form-group">
+                      <label class="control-label col-md-3 col-sm-3 col-xs-12" for="first-name">Margen <span class="required">*</span>
+                      </label>
+                      <div class="col-md-6 col-sm-6 col-xs-12">
+                        <input type="text" id="txtMargen" name="txtMargen" required="required"   value="<?php echo $resultado[11]; ?>"> CLP
+                        <input type="text" id="txtMargenP" name="txtMargenP" required="required"   value="<?php echo $resultado[12]; ?>"> %
+                      </div>
                     </div>
                     <div class="form-group">
                       <label class="control-label col-md-3 col-sm-3 col-xs-12"  for="first-name">Checklist <span class="required">*</span>

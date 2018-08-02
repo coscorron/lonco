@@ -13,6 +13,12 @@ $idApp = 1;
       $txtError = isset($_POST['txtError']) ? $_POST['txtError'] : '';
       $resultado = getProject($conn,$txtProject);
     ?>
+    <script>
+    function volver(){
+      form1.action = "project_expenses.php";
+      form1.submit();
+    }
+    </script>
   </head>
   <body class="nav-md">
     <div class="container body">
@@ -90,7 +96,7 @@ $idApp = 1;
                    <div class="ln_solid"></div>
                     <div class="form-group">
                       <div class="col-md-6 col-sm-6 col-xs-12 col-md-offset-3">
-                        <button class="btn btn-primary" type="button" onclick="location.href='project_expenses.php'">Cancel</button>
+                        <button class="btn btn-primary" type="button" onclick="volver();">Cancel</button>
                         <button class="btn btn-primary" type="reset">Reset</button>
                         <button type="submit" class="btn btn-success">Submit</button>
                       </div>
