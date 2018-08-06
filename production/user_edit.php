@@ -62,20 +62,6 @@ $idApp = 1;
                       </div>
                     </div>
                     <div class="form-group">
-                      <label class="control-label col-md-3 col-sm-3 col-xs-12" for="last-name">Apellido Paterno <span class="required">*</span>
-                      </label>
-                      <div class="col-md-6 col-sm-6 col-xs-12">
-                        <input type="text" id="txtPaterno" name="txtPaterno" required="required" class="form-control col-md-7 col-xs-12" value="<?php echo $resultado[1]; ?>">
-                      </div>
-                    </div>
-                    <div class="form-group">
-                      <label class="control-label col-md-3 col-sm-3 col-xs-12" for="last-name">Apellido Materno <span class="required">*</span>
-                      </label>
-                      <div class="col-md-6 col-sm-6 col-xs-12">
-                        <input type="text" id="txtMaterno" name="txtMaterno" required="required" class="form-control col-md-7 col-xs-12" value="<?php echo $resultado[2]; ?>">
-                      </div>
-                    </div>
-                    <div class="form-group">
                       <label class="control-label col-md-3 col-sm-3 col-xs-12">Perfil</label>
                       <div class="col-md-6 col-sm-6 col-xs-12">
                           <select name="slcProfile" id="slcProfile"  required><?php getPerfil($conn, $resultado[5]); ?></select>

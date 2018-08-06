@@ -95,6 +95,9 @@ function getChart($conn,$session_user){
     WHERE tp.eliminado = 0 and tp.fechaTermino > sysdate()
     AND tp.gerente = '$session_user'
     and tc.eliminado = 0 and tc.idCliente = tp.idCliente";
+  echo $sql;
+  $sql  = "SELECT s.idSubCliente as idProyecto FROM subclient s
+  WHERE s.eliminado = 0 and s.fecha_fin > sysdate() ";
   $rs = $conn->query($sql);
   while ($row = $rs->fetch_assoc()){
     $idProyecto=$row["idProyecto"];

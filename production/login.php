@@ -59,7 +59,7 @@ session_destroy();
                 </div>
               <?php } ?>
               <div>
-                <input type="text" class="form-control" placeholder="Username" required="required" id="txtUser" name="txtUser" />
+                <input type="text" class="form-control" placeholder="Username or mail" required="required" id="txtUser" name="txtUser" />
               </div>
               <div>
                 <input type="password" class="form-control" placeholder="Password" required="required" id="txtPass" name="txtPass" />

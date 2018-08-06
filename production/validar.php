@@ -6,7 +6,6 @@ include("WS_log.php");
 $txtUser = isset($_POST['txtUser']) ? $_POST['txtUser'] : '';
 $txtPass = isset($_POST['txtPass']) ? $_POST['txtPass'] : '';
 $txtError = isset($_POST['txtError']) ? $_POST['txtError'] : '';
-
 $resultado = login($conn, $txtUser, $txtPass);
 
 $error = "";
@@ -18,10 +17,10 @@ if ($resultado[0] == "0"){
   $ref="login.php";
 } else {
   $ref = "index.php";
-  $_SESSION["mail"] = $txtUser;
+  $_SESSION["mail"] = $resultado[4];;
   $_SESSION["nombre"] = $resultado[2];
   $_SESSION["idPerfil"] = $resultado[3];
-  $description = "login OK de " . $txtUser;
+  $description = "login OK de " . $resultado[4];
   log_app($conn,'LOGIN',$txtUser,$description);
 }
 ?>

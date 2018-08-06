@@ -19,18 +19,18 @@ function getUser2($conn,$selected){
 }
 //trae los datos asociados a un usuario determinado
 function getUser($conn,$user){
-  $sql = "SELECT nombre, paterno, materno, tipo, habilitado, idPerfil, valorHH FROM tbl_usuario WHERE mail = '$user'";
+  $sql = "SELECT name, tipo, active, id_perfil, valorHH
+  FROM user u, userperfilsubclient ups
+  WHERE email = '$user' AND ups.id_user = user ";
   $rs = $conn->query($sql);
   $existe = 0;
   while ($row = $rs->fetch_assoc()) {
     $existe=1;
-    $resultado[0]=trim($row["nombre"]);
-    $resultado[1]=trim($row["paterno"]);
-    $resultado[2]=trim($row["materno"]);
-    $resultado[3]=trim($row["tipo"]);
-    $habilitado=trim($row["habilitado"]);
-    $resultado[5]=trim($row["idPerfil"]);
-    $resultado[6]=trim($row["valorHH"]);
+    $resultado[0]=trim($row["name"]);
+    $resultado[1]=trim($row["tipo"]);
+    $habilitado=trim($row["active"]);
+    $resultado[2]=trim($row["id_perfil"]);
+    $resultado[3]=trim($row["valorHH"]);
     if (trim($habilitado) == "1"){
       $habilitado = " checked ";
     } else {
@@ -77,7 +77,6 @@ function changePass($conn,$user,$pass){
 function insertUser($conn,$txtMail,$txtNombre,$txtPaterno, $txtMaterno, $txtPass,$chkEnabled,$slcProfile, $slcTipo, $txtValorHH){
   $sql = "INSERT INTO tbl_usuario (mail, password, nombre, paterno, materno, idPerfil, tipo, habilitado, valorHH, eliminado) VALUES
           ('$txtMail','$txtPass','$txtNombre','$txtPaterno','$txtMaterno',$slcProfile,'$slcTipo',$chkEnabled,$txtValorHH,0)";
-//echo $sql;
   $conn->query($sql);
 }
 
@@ -97,17 +96,18 @@ function updateUser($conn,$txtMail,$txtNombre,$txtPaterno,$txtMaterno,$txtPass,$
 
 //trae los usuarios existentes en la base de datos
 function getUserList($conn){
-  $sql = "SELECT tu.mail, tu.nombre, tu.paterno, tu.materno, tp.nombre as perfil, tu.habilitado, tipo
-          FROM tbl_usuario tu, tbl_perfil tp
+  $sql = "SELECT tu.email, tu.name,  tp.name as perfil, tu.active as habilitado, tipo
+          FROM user tu, perfil tp, userperfilsubclient ups
           WHERE tu.eliminado = 0
-          AND tu.idPerfil = tp.idPerfil
-          ORDER BY tu.mail asc";
+          AND ups.id_user = tu.user
+          AND ups.id_perfil = tp.id_perfil
+          ORDER BY tu.email asc";
   $rs = $conn->query($sql);
 
     while ($row = $rs->fetch_assoc()) {
       $idPerfil = $row["perfil"];
-      $usuario=trim($row["mail"]);
-      $nombre = trim($row["nombre"]." ".$row["paterno"]);
+      $usuario=trim($row["email"]);
+      $nombre = trim($row["name"]);
       $perfil = trim($row["perfil"]);
       $tipo = trim($row["tipo"]);
       $habilitado = $row["habilitado"];
@@ -136,26 +136,33 @@ function getUserList($conn){
 }
 
 //elimina un usuario
-function RemoveUser($conn, $txtUser){
-  $sql = "UPDATE tbl_usuario set  eliminado = 1 WHERE mail = '$txtUser' ";
+function RemoveUser($conn, $txtUser,$session_user){
+  $sql = "UPDATE user set  eliminado = 1, fecha_eliminacion = now(), user_eliminador = '$session_user' WHERE email = '$txtUser' ";
   $conn->query($sql);
 }
 
 //valida login
 function login($conn, $txtMail, $txtPass){
-  $sql = "SELECT nombre, paterno, idPerfil, password FROM tbl_usuario WHERE mail = '$txtMail' AND habilitado = 1 AND eliminado = 0";
+  $sql = "SELECT user, email, name, pass, 0 as idPerfil FROM user WHERE (user = '$txtMail' OR email = '$txtMail') AND eliminado = 0 AND active = 1";
   $rs = $conn->query($sql);
   $resultado[0] = 0;
   $resultado[1] = "Usuario no existe o bloqueado";
   while ($row = $rs->fetch_assoc()) {
-    $password = $row["password"];
-    $nombre = $row["nombre"] . " " . $row["paterno"];
+    $password = $row["pass"];
+    $nombre = $row["name"];
     $idPerfil = $row["idPerfil"];
-    if (password_verify($txtPass, $password)) {
+    $user = $row["user"];
+    $email = $row["email"];
+    $txtPass = md5($txtPass);
+    if ($txtPass == $password) {
         $resultado[0] = 1;
         $resultado[1] = "OK";
         $resultado[2] = $nombre;
         $resultado[3] = $idPerfil;
+        $resultado[4] = $user;
+        $resultado[5] = $email;
+        $sql = "UPDATE user SET ingresos = ingresos + 1, ultimo_login = NOW() where user = '$user'";
+        $conn->query($sql);
     } else {
         $resultado[0] = 0;
         $resultado[1] = "Usuario o contraseña no coinciden";
