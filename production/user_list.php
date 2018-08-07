@@ -65,7 +65,6 @@ $idApp = 1;
                         </div>
                 </div>
                 <div class="clearfix"></div>
-                <button type="button" class="btn btn-success" onclick="location.href='user_add.php'"><i class="fa fa-plus"></i> Nuevo</button>
               </div>
               <div class="modal fade bs-example-modal-sm" tabindex="-1" role="dialog" aria-hidden="true">
                 <div class="modal-dialog modal-sm">

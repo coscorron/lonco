@@ -6,11 +6,23 @@ $idApp = 1;
   <head>
     <?php
       include("referencia.php");
+      include("connection_db.php");
+      include("WS_client.php");
+      $txtError = isset($_POST['txtError']) ? $_POST['txtError'] : '';
     ?>
     <script>
-    function Editar(){
-      location.href = 'client_edit.php';
-    }
+      function editar(idCliente){
+        form2.txtidCliente.value = idCliente;
+        form2.action = "client_edit.php";
+        form2.submit();
+      }
+      function Remove(idCliente){
+        form2.txtidCliente.value = idCliente;
+      }
+      function Delete(){
+        form2.action="client_remove.php";
+        form2.submit();
+      }
     </script>
   </head>
   <body class="nav-md">
@@ -29,7 +41,9 @@ $idApp = 1;
                   <div class="clearfix"></div>
                 </div>
                 <div class="x_content">
-                  <form id="form2" name="form2" data-parsley-validate class="form-horizontal form-label-left">
+                  <form id="form2" name="form2" data-parsley-validate class="form-horizontal form-label-left" method="post" action="">
+                      <input type="hidden" id="txtidCliente" name="txtidCliente" value="">
+                    </form>
 
                         <div class="x_content">
 
@@ -37,49 +51,18 @@ $idApp = 1;
                             <thead>
                               <tr>
                                 <th>Nombres</th>
-                                <th>Habilitado</th>
+                                <th>CECO</th>
+                                <th>Estado</th>
                                 <th>Acciones</th>
                               </tr>
                             </thead>
                             <tbody>
-                              <tr>
-                                <td>Tiger Nixon</td>
-                                <td>$320,800</td>
-                                <td>
-                                  <div class="btn-group  btn-group-sm">
-                                    <button class="btn btn-info" type="button" onclick="Editar();">Editar</button>
-                                    <button class="btn btn-danger" type="button" data-toggle="modal" data-target=".bs-example-modal-sm">Eliminar</button>
-                                  </div>
-                                </td>
-                              </tr>
-                              <tr>
-                                <td>Garrett Winters</td>
-                                <td>$170,750</td>
-                                <td>
-                                  <div class="btn-group  btn-group-sm">
-                                    <button class="btn btn-info" type="button" onclick="Editar();">Editar</button>
-                                    <button class="btn btn-danger" type="button" data-toggle="modal" data-target=".bs-example-modal-sm">Eliminar</button>
-                                  </div>
-                                </td>
-                              </tr>
-                              <tr>
-                                <td>Ashton Cox</td>
-                                <td>$86,000</td>
-                                <td>
-                                  <div class="btn-group  btn-group-sm">
-                                    <button class="btn btn-info" type="button" onclick="Editar();">Editar</button>
-                                    <button class="btn btn-danger" type="button" data-toggle="modal" data-target=".bs-example-modal-sm">Eliminar</button>
-                                  </div>
-                                </td>
-                              </tr>
+                                <?php getClientList($conn); ?>
                             </tbody>
                           </table>
                         </div>
-
-                  </form>
                 </div>
                 <div class="clearfix"></div>
-                <button type="button" class="btn btn-success" onclick="location.href='client_add.php'"><i class="fa fa-plus"></i> Nuevo</button>
               </div>
               <div class="modal fade bs-example-modal-sm" tabindex="-1" role="dialog" aria-hidden="true">
                 <div class="modal-dialog modal-sm">
@@ -91,11 +74,11 @@ $idApp = 1;
                       <h4 class="modal-title" id="myModalLabel2">Confirmación de eliminación</h4>
                     </div>
                     <div class="modal-body">
-                      <p>¿está seguro de eliminar a cliente XXXXXXX</p>
+                      <p>¿está seguro de eliminar a cliente?</p>
                     </div>
                     <div class="modal-footer">
                       <button type="button" class="btn btn-default" data-dismiss="modal">Cancelar</button>
-                      <button type="button" class="btn btn-danger">Eliminar</button>
+                      <button type="button" class="btn btn-danger" onclick="Delete();">Eliminar</button>
                     </div>
 
                   </div>

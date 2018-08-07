@@ -23,11 +23,11 @@ if ($chkEnabled == 'on'){
 
 //Valida si el correo existe
 $change = changePass($conn,$txtMail,$txtPass1);
-updateUser($conn,$txtMail,$txtNombre,$txtPaterno,$txtMaterno,$txtPass1,$chkEnabled,$slcProfile,$slcTipo,$txtValorHH,$change);
+updateUser($conn,$txtMail,$txtNombre,$txtPaterno,$txtMaterno,$txtPass1,$chkEnabled,$slcTipo,$txtValorHH,$change);
 $description = "Actualizado el usuario " . $txtMail;
 log_app($conn,'UPDATE',$session_user,$description);
 $ref="user_list.php";
-$error="&nbsp;&nbsp;&nbsp;<b>Usuario $txtMail actualizado!</b>";
+$error="    <b>Usuario $txtMail actualizado!</b>";
 ?>
 <html>
 <body>

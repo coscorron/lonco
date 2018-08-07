@@ -81,16 +81,15 @@ function insertUser($conn,$txtMail,$txtNombre,$txtPaterno, $txtMaterno, $txtPass
 }
 
 //Actualiza usuario
-function updateUser($conn,$txtMail,$txtNombre,$txtPaterno,$txtMaterno,$txtPass,$chkEnabled,$slcProfile,$slcTipo,$txtValorHH,$change){
-  $sql = "UPDATE tbl_usuario set nombre = '$txtNombre', paterno = '$txtPaterno', materno='$txtMaterno',
-          idPerfil = $slcProfile, habilitado = $chkEnabled, tipo = '$slcTipo', valorHH ='$txtValorHH' ";
+function updateUser($conn,$txtMail,$txtNombre,$txtPaterno,$txtMaterno,$txtPass,$chkEnabled,$slcTipo,$txtValorHH,$change){
+  $sql = "UPDATE user set name = '$txtNombre', active = $chkEnabled, tipo = '$slcTipo', valorHH ='$txtValorHH' ";
   if ($change ==0){
-    $passHash = password_hash($txtPass, PASSWORD_BCRYPT);
+    $passHash = md5($txtPass);
     $sql2 = " , password = '$passHash' ";
   } else {
     $sql2= "";
   }
-  $sql = $sql . $sql2 . " WHERE mail = '$txtMail'";
+  $sql = $sql . $sql2 . " WHERE email = '$txtMail'";
   $conn->query($sql);
 }
 

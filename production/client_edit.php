@@ -7,6 +7,9 @@ $idApp = 1;
     <?php
       include("referencia.php");
       include("connection_db.php");
+      include("WS_client.php");
+      $txtidCliente = isset($_POST['txtidCliente']) ? $_POST['txtidCliente'] : '';
+      $resultado = getClient($conn,$txtidCliente);
     ?>
   </head>
   <body class="nav-md">
@@ -26,13 +29,28 @@ $idApp = 1;
                 </div>
                 <div class="x_content">
                   <br />
-                  <form id="form1" name="form1" data-parsley-validate class="form-horizontal form-label-left" method="post">
-
+                  <form id="form1" name="form1" data-parsley-validate class="form-horizontal form-label-left" method="post" action="client_update.php">
                     <div class="form-group">
                       <label class="control-label col-md-3 col-sm-3 col-xs-12" for="last-name">Nombre <span class="required">*</span>
                       </label>
                       <div class="col-md-6 col-sm-6 col-xs-12">
-                        <input type="text" id="txtNombre" name="txtNombre" required="required" class="form-control col-md-7 col-xs-12">
+                        <input type="text" id="txtNombre" name="txtNombre" required="required" class="form-control col-md-7 col-xs-12" value="<?php echo $resultado[0]; ?>">
+                        <input type="hidden" id="txtidCliente" name="txtidCliente" value="<?php echo $txtidCliente;?>">
+                      </div>
+                    </div>
+                    <div class="form-group">
+                      <label class="control-label col-md-3 col-sm-3 col-xs-12" for="last-name">CECO <span class="required">*</span>
+                      </label>
+                      <div class="col-md-6 col-sm-6 col-xs-12">
+                        <input type="text" id="txtCECO" name="txtCECO" required="required" class="form-control col-md-7 col-xs-12" value="<?php echo $resultado[1]; ?>">
+                      </div>
+                    </div>
+                    <div class="form-group">
+                      <label class="control-label col-md-3 col-sm-3 col-xs-12">Habilitado</label>
+                      <div class="col-md-6 col-sm-6 col-xs-12">
+                        <label>
+                           <input type="checkbox"  id="chkEnabled" name="chkEnabled"  class="js-switch" <?php echo $resultado[2] ; ?>/>
+                         </label>
                       </div>
                     </div>
                     <div class="ln_solid"></div>
@@ -60,17 +78,4 @@ $idApp = 1;
       include("referenciaFooter.php");
     ?>
   </body>
-  <script>
-  var form = document.getElementById('form1');
-  var pass1 = document.getElementById('txtPass1');
-  var pass2 = document.getElementById('txtPass2');
-
-  form.addEventListener("submit", function (event) {
-    if (pass1.value != pass2.value){
-      alert('WRONG password confirm!');
-      event.preventDefault();
-      pass2.focus();
-    }
-  }, false);
-  </script>
 </html>
